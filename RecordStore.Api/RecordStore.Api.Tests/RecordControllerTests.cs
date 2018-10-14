@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RecordStore.Api.Controllers;
@@ -20,23 +21,17 @@ namespace RecordStore.Api.Tests
         }
 
         [TestMethod]
-        public void Get_WhenRouteIsCalled_ThenControllerShouldReturnRecords()
+        public async Task Get_WhenNoParams_ShouldReturnIEnumerableOfRecords()
         {
-            var result = _recordsController.Get();
+            var result = await _recordsController.Get();
             result.GetType().Should().BeAssignableTo<IEnumerable<Record>>();
         }
 
         [TestMethod]
-        public void Get_WhenRouteIsCalledWithValidId_ThenControllerShouldReturnRecord()
+        public async Task Get_WhenIdIsProvided_ShouldReturnCorrespondingRecord()
         {
-            var result = _recordsController.Get(_recordId);
+            var result = await _recordsController.Get(_recordId);
             result.Should().BeOfType<Record>();
-        }
-
-        [TestMethod]
-        public void Get_WhenRouteIsCalledWithValidId_ThenControllerShouldReturnCorrespondingRecord()
-        {
-            var result = _recordsController.Get(_recordId);
             result.Id.Should().Be(_recordId);
         }
 

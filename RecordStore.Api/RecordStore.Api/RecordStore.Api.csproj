@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RecordStore.DomainObjects\RecordStore.DomainObjects.csproj" />
+    <ProjectReference Include="..\RecordStore.Services\RecordStore.Services.csproj" />
   </ItemGroup>
 
 </Project>

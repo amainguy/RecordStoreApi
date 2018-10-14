@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.DomainObjects;
 
@@ -8,29 +9,29 @@ namespace RecordStore.Api.Controllers
     public class RecordsController : Controller
     {
         [HttpGet]
-        public IEnumerable<Record> Get()
+        public async Task<IEnumerable<Record>> Get()
         {
             return new List<Record>();
         }
 
         [HttpGet("{id}")]
-        public Record Get(int id)
+        public async Task<Record> Get(int id)
         {
             return new Record { Id = 1 };
         }
 
         [HttpPost]
-        public void Post([FromBody] Record record)
+        public async Task Post([FromBody] Record record)
         {
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Record record)
+        public async Task Put(int id, [FromBody] Record record)
         {
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
         }
     }
