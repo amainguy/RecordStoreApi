@@ -2,22 +2,30 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.DomainObjects;
+using RecordStore.Services.Interfaces;
 
 namespace RecordStore.Api.Controllers
 {
     [Route("api/records")]
     public class RecordsController : Controller
     {
+        public IRecordService _recordService;
+
+        public RecordsController(IRecordService recordService)
+        {
+            _recordService = recordService;
+        }
+
         [HttpGet]
         public async Task<IEnumerable<Record>> Get()
         {
-            return new List<Record>();
+            return await _recordService.GetAll();
         }
 
         [HttpGet("{id}")]
         public async Task<Record> Get(int id)
         {
-            return new Record { Id = 1 };
+            return await _recordService.GetById(1);
         }
 
         [HttpPost]

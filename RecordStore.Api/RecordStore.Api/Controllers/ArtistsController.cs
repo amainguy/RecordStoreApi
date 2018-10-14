@@ -9,7 +9,12 @@ namespace RecordStore.Api.Controllers
     [Route("api/artists")]
     public class ArtistsController : Controller
     {
-        private IArtistService _artistService;
+        private readonly IArtistService _artistService;
+
+        public ArtistsController(IArtistService artistService)
+        {
+            _artistService = artistService;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<Artist>> Get()
@@ -20,7 +25,7 @@ namespace RecordStore.Api.Controllers
         [HttpGet("{id}")]
         public async Task<Artist> Get(int id)
         {
-            return new Artist { Id = 1 };
+            return await _artistService.GetById(1);
         }
 
         [HttpPost]

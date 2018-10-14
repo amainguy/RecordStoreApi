@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RecordStore.Services.Implementations;
+using RecordStore.Services.Interfaces;
 
 namespace RecordStore.Api
 {
@@ -17,6 +19,8 @@ namespace RecordStore.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<IArtistService, ArtistService>();
+            services.AddTransient<IRecordService, RecordService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
