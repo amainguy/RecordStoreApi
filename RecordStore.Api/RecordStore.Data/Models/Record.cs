@@ -1,6 +1,6 @@
 namespace RecordStore.Data.Models
 {
-    public class Record
+    public class Record : BaseEntity
     {
         public int RecordId { get; set; }
         public string Title { get; set; }
