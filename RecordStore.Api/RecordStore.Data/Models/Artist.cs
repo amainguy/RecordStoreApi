@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 
 namespace RecordStore.Data.Models
 {
@@ -7,6 +7,7 @@ namespace RecordStore.Data.Models
         public int ArtistId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public ICollection Records { get; set; }
+
+        public IList<Record> Records { get; set; }
     }
 }

@@ -10,5 +10,10 @@ namespace RecordStore.Data
 
         public RecordStoreDbContext(DbContextOptions<RecordStoreDbContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Record>().HasOne(r => r.Artist).WithMany(a => a.Records);
+        }
+
     }
 }
