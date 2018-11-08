@@ -42,6 +42,8 @@ namespace RecordStore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(r => r.Artist).WithMany(a => a.Records);
+
+            DataSeeder.SeedData(modelBuilder);
         }
 
     }
