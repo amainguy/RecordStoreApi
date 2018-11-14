@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RecordStore.Data.Models;
 using RecordStore.DomainObjects;
 
-namespace RecordStore.Services.Interfaces
+namespace RecordStore.Data.Repositories.Interfaces
 {
-    public interface IArtistService
+    public interface IArtistRepository
     {
         Task<IEnumerable<ArtistDo>> GetAll();
-        Task<ArtistDo> GetById(int id);
+        Task<ArtistDo> Get(int id);
     }
 }

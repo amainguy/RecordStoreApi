@@ -1,10 +1,9 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RecordStore.Services.Implementations;
-using RecordStore.Services.Interfaces;
-
+using RecordStore.DI;
 
 namespace RecordStore.Api
 {
@@ -20,17 +19,15 @@ namespace RecordStore.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddTransient<IArtistService, ArtistService>();
-            services.AddTransient<IRecordService, RecordService>();
+            services.AddAutoMapper();
+            services.AddRecordStoreDependencies();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) 
                 app.UseDeveloperExceptionPage();
-            }
-
+           
             app.UseMvc();
         }
     }

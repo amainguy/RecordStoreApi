@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
   </ItemGroup>
 
@@ -17,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RecordStore.DI\RecordStore.DI.csproj" />
     <ProjectReference Include="..\RecordStore.DomainObjects\RecordStore.DomainObjects.csproj" />
     <ProjectReference Include="..\RecordStore.Services\RecordStore.Services.csproj" />
   </ItemGroup>

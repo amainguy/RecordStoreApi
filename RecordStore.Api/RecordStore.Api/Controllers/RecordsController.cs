@@ -17,24 +17,24 @@ namespace RecordStore.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Record>> Get()
+        public async Task<IEnumerable<RecordDo>> Get()
         {
             return await _recordService.GetAll();
         }
 
         [HttpGet("{id}")]
-        public async Task<Record> Get(int id)
+        public async Task<RecordDo> Get(int id)
         {
             return await _recordService.GetById(1);
         }
 
         [HttpPost]
-        public async Task Post([FromBody] Record record)
+        public async Task Post([FromBody] RecordDo record)
         {
         }
 
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] Record record)
+        public async Task Put(int id, [FromBody] RecordDo record)
         {
         }
 

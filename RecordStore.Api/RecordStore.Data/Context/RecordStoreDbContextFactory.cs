@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace RecordStore.Data
+namespace RecordStore.Data.Context
 {
     class RecordStoreDbContextFactory : IDesignTimeDbContextFactory<RecordStoreDbContext>
     {

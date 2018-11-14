@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RecordStore.Data.Models;
 
-namespace RecordStore.Data
+namespace RecordStore.Data.Context
 {
     public class RecordStoreDbContext : DbContext
     {

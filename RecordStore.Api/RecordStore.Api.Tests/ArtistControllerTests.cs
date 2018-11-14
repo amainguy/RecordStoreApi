@@ -27,22 +27,22 @@ namespace RecordStore.Api.Tests
         public async Task Get_WhenNoParams_ShouldReturnIEnumerableOfRecords()
         {
             var result = await _artistsController.Get();
-            result.GetType().Should().BeAssignableTo<IEnumerable<Artist>>();
+            result.GetType().Should().BeAssignableTo<IEnumerable<ArtistDo>>();
         }
 
         [TestMethod]
         public async Task Get_WhenIdIsProvided_ShouldReturnCorrespondingRecord()
         {
             var result = await _artistsController.Get(_artistId);
-            result.Should().BeOfType<Artist>();
+            result.Should().BeOfType<ArtistDo>();
             result.Id.Should().Be(_artistId);
         }
 
         private void Setup()
         {
             _mockService = new Mock<IArtistService>();
-            _mockService.Setup(x => x.GetAll()).ReturnsAsync(new Artist[0]);
-            _mockService.Setup(x => x.GetById(_artistId)).ReturnsAsync(new Artist { Id = _artistId });
+            _mockService.Setup(x => x.GetAll()).ReturnsAsync(new ArtistDo[0]);
+            _mockService.Setup(x => x.GetById(_artistId)).ReturnsAsync(new ArtistDo { Id = _artistId });
             _artistsController = new ArtistsController(_mockService.Object);
         }
     }

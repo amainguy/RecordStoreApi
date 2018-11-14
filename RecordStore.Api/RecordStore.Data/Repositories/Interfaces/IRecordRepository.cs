@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RecordStore.DomainObjects;
 
-namespace RecordStore.Services.Interfaces
+namespace RecordStore.Data.Repositories.Interfaces
 {
-    public interface IRecordService
+    public interface IRecordRepository
     {
         Task<IEnumerable<RecordDo>> GetAll();
-        Task<RecordDo> GetById(int id);
+        Task<RecordDo> Get(int id);
     }
 }

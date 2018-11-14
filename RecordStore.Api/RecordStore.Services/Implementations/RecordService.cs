@@ -1,20 +1,23 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RecordStore.Data;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
 
 namespace RecordStore.Services.Implementations
 {
-    public class RecordService : IRecordService
+    public class RecordService : BaseService, IRecordService
     {
-        public async Task<IEnumerable<Record>>  GetAll()
+        public RecordService(IUnitOfWork unitOfWork) : base(unitOfWork) {}
+
+        public async Task<IEnumerable<RecordDo>>  GetAll()
         {
-            return new Record[0];
+            return await _unitOfWork.Records.GetAll();
         }
 
-        public async Task<Record> GetById(int id)
+        public async Task<RecordDo> GetById(int id)
         {
-            return new Record { Id = id };
+            return await _unitOfWork.Records.Get(id);
         }
     }
 }

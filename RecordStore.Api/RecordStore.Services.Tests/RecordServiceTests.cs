@@ -2,19 +2,27 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
+using RecordStore.Data;
+using RecordStore.Data.Repositories.Interfaces;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Implementations;
+using RecordStore.Services.Interfaces;
 
 namespace RecordStore.Services.Tests
 {
     [TestClass]
     public class RecordServiceTests
     {
-        private RecordService _subject;
+        private IRecordService _subject;
+        private IUnitOfWork _unitOfWork;
+        private int _recordId;
 
         [TestInitialize]
         public void Initialize()
         {
+            _unitOfWork = Substitute.For<IUnitOfWork>();
+            _recordId = 1;
             CreateSubject();
         }
 
@@ -22,20 +30,22 @@ namespace RecordStore.Services.Tests
         public async Task GetAll_ShouldReturnIEnumerableOfRecords()
         {
             var result = await _subject.GetAll();
-            result.GetType().Should().BeAssignableTo<IEnumerable<Record>>();
+            result.GetType().Should().BeAssignableTo<IEnumerable<RecordDo>>();
         }
 
         [TestMethod]
         public async Task GetById_ShouldReturnCorrespondingRecord()
         {
-            var result = await _subject.GetById(1);
-            result.Should().BeOfType<Record>();
-            result.Id.Should().Be(1);
+            var result = await _subject.GetById(_recordId);
+            result.Should().BeOfType<RecordDo>();
+            result.Id.Should().Be(_recordId);
         }
 
         private void CreateSubject()
         {
-            _subject = new RecordService();
+            _unitOfWork.Records.Returns(Substitute.For<IRecordRepository>());
+            _unitOfWork.Records.Get(_recordId).Returns(new RecordDo {Id = _recordId});
+            _subject = new RecordService(_unitOfWork);
         }
     }
 }
