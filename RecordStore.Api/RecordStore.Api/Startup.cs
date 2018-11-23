@@ -19,8 +19,7 @@ namespace RecordStore.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddAutoMapper();
-            services.AddRecordStoreDependencies();
+            services.AddRecordStore();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

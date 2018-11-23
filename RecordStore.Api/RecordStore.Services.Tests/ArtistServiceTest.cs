@@ -38,13 +38,13 @@ namespace RecordStore.Services.Tests
         {
             var result = await _subject.GetById(_artistId);
             result.Should().BeOfType<ArtistDo>();
-            result.Id.Should().Be(_artistId);
+            result.ArtistId.Should().Be(_artistId);
         }
 
         private void CreateSubject()
         {
             _unitOfWork.Artists.Returns(Substitute.For<IArtistRepository>());
-            _unitOfWork.Artists.Get(_artistId).Returns(new ArtistDo {Id = _artistId});
+            _unitOfWork.Artists.Get(_artistId).Returns(new ArtistDo {ArtistId = _artistId});
             _subject = new ArtistService(_unitOfWork);
         }
     }

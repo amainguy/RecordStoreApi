@@ -25,10 +25,14 @@ namespace RecordStore.Data.Context
             return await base.SaveChangesAsync();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\amain\\Projects\\RecordStore\\RecordStore.Api\\RecordStore.Data\\RecordStore.sqlite");
+        }
+
         private void AddAuditInfo()
         {
-            var entries = ChangeTracker
-                .Entries()
+            var entries = ChangeTracker.Entries()
                 .Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State ==  EntityState.Modified));
 
             foreach (var entry in entries)
@@ -42,9 +46,7 @@ namespace RecordStore.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(r => r.Artist).WithMany(a => a.Records);
-
             DataSeeder.SeedData(modelBuilder);
         }
-
     }
 }

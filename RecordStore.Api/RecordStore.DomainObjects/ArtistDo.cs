@@ -4,7 +4,7 @@ namespace RecordStore.DomainObjects
 {
     public class ArtistDo
     {
-        public int Id { get; set; }
+        public int ArtistId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public IEnumerable<RecordDo> Records { get; set; }

@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RecordStore.Data;
 using RecordStore.Data.Context;
 
 namespace RecordStore.Data.Migrations
 {
     [DbContext(typeof(RecordStoreDbContext))]
-    [Migration("20181108012452_SeedData")]
-    partial class SeedData
+    [Migration("20181123223802_seed_data")]
+    partial class seed_data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,7 +36,8 @@ namespace RecordStore.Data.Migrations
                     b.ToTable("Artists");
 
                     b.HasData(
-                        new { ArtistId = 1, Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), FirstName = "David", LastName = "Bowie", Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                        new { ArtistId = 1, Created = new DateTime(2018, 11, 23, 22, 38, 1, 980, DateTimeKind.Utc), FirstName = "David", LastName = "Bowie", Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                        new { ArtistId = 2, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), FirstName = "Chet", LastName = "Atkins", Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                     );
                 });
 
@@ -63,7 +63,12 @@ namespace RecordStore.Data.Migrations
                     b.ToTable("Records");
 
                     b.HasData(
-                        new { RecordId = 1, ArtistId = 1, Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1973, Title = "Aladdin Sane" }
+                        new { RecordId = 1, ArtistId = 1, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1969, Title = "Space Oddity" },
+                        new { RecordId = 2, ArtistId = 1, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1970, Title = "The Man Who Sold The World" },
+                        new { RecordId = 3, ArtistId = 1, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1971, Title = "Hunky Dory" },
+                        new { RecordId = 4, ArtistId = 1, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1972, Title = "The Rise and Fall of Ziggy Stardust and the Spiders from Mars" },
+                        new { RecordId = 5, ArtistId = 1, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1973, Title = "Aladdin Sane" },
+                        new { RecordId = 6, ArtistId = 2, Created = new DateTime(2018, 11, 23, 22, 38, 1, 982, DateTimeKind.Utc), Modified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), ReleaseYear = 1964, Title = "My Favorite Guitars" }
                     );
                 });
 
