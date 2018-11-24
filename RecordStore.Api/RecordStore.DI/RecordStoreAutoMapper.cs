@@ -10,8 +10,8 @@ namespace RecordStore.DI
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<Record, RecordDo>();
-                config.CreateMap<Artist, ArtistDo>();
+                config.CreateMap<Record, RecordDo>().ReverseMap();
+                config.CreateMap<Artist, ArtistDo>().ReverseMap();
             });
         }
     }

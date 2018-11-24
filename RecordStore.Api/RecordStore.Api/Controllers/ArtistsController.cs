@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.DomainObjects;
@@ -17,30 +17,36 @@ namespace RecordStore.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ArtistDo>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _artistService.GetAll();
+            var artists = await _artistService.GetAll();
+            return Ok(artists);
         }
 
         [HttpGet("{id}")]
-        public async Task<ArtistDo> Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return await _artistService.GetById(1);
+            var artist = await _artistService.GetById(id);
+            if (artist == null)  return NotFound();
+            return Ok(artist);
         }
 
         [HttpPost]
-        public async Task Post([FromBody] ArtistDo artist)
+        public async Task<IActionResult> Create([FromBody] ArtistDo artist)
         {
+            throw  new NotImplementedException();
         }
 
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] ArtistDo artist)
+        public async Task Update(int id, [FromBody] ArtistDo artist)
         {
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

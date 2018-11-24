@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using RecordStore.Data.Repositories.Interfaces;
 
 namespace RecordStore.Data
@@ -7,5 +8,6 @@ namespace RecordStore.Data
         IRecordRepository Records { get; }
         IArtistRepository Artists { get; }
         void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

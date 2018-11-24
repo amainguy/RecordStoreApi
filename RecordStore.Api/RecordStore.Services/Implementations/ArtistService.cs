@@ -24,5 +24,12 @@ namespace RecordStore.Services.Implementations
         {
             return await _unitOfWork.Artists.Get(id);
         }
+
+        public async Task<ArtistDo> Create(ArtistDo artist)
+        {
+            _unitOfWork.Artists.Create(artist);
+            await _unitOfWork.SaveChangesAsync();
+            return artist;
+        }
     }
 }

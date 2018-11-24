@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RecordStore.Api.Controllers;
-using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
-using Moq;
+using NSubstitute;
 
 
 namespace RecordStore.Api.Tests
@@ -14,7 +12,7 @@ namespace RecordStore.Api.Tests
     public class RecordsControllerTests
     {
         private RecordsController _recordsController;
-        private Mock<IRecordService> _mockService;
+        private IRecordService _recordService;
         private int _recordId;
 
         [TestInitialize]
@@ -28,23 +26,18 @@ namespace RecordStore.Api.Tests
         public async Task Get_WhenNoParams_ShouldReturnIEnumerableOfRecords()
         {
             var result = await _recordsController.Get();
-            result.GetType().Should().BeAssignableTo<IEnumerable<RecordDo>>();
         }
 
         [TestMethod]
-        public async Task Get_WhenIdIsProvided_ShouldReturnCorrespondingRecord()
+        public async Task GetById_WhenIdIsProvided_ShouldReturnCorrespondingRecord()
         {
-            var result = await _recordsController.Get(_recordId);
-            result.Should().BeOfType<RecordDo>();
-            result.Id.Should().Be(_recordId);
+            var result = await _recordsController.GetById(_recordId);
         }
 
         private void Setup()
         {
-            _mockService = new Mock<IRecordService>();
-            _mockService.Setup(x => x.GetAll()).ReturnsAsync(new RecordDo[0]);
-            _mockService.Setup(x => x.GetById(_recordId)).ReturnsAsync(new RecordDo { Id = _recordId });
-            _recordsController = new RecordsController(_mockService.Object);
+            _recordService = Substitute.For<IRecordService>();
+            _recordsController = new RecordsController(_recordService);
         }
 
     }

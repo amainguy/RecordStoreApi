@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using NSubstitute;
 using RecordStore.Api.Controllers;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
@@ -12,7 +12,7 @@ namespace RecordStore.Api.Tests
     [TestClass]
     public class ArtistControllerTests
     {
-        private Mock<IArtistService> _mockService;
+        private IArtistService _artistService;
         private ArtistsController _artistsController;
         private int _artistId;
 
@@ -27,23 +27,20 @@ namespace RecordStore.Api.Tests
         public async Task Get_WhenNoParams_ShouldReturnIEnumerableOfRecords()
         {
             var result = await _artistsController.Get();
-            result.GetType().Should().BeAssignableTo<IEnumerable<ArtistDo>>();
         }
 
         [TestMethod]
         public async Task Get_WhenIdIsProvided_ShouldReturnCorrespondingRecord()
         {
-            var result = await _artistsController.Get(_artistId);
-            result.Should().BeOfType<ArtistDo>();
-            result.Id.Should().Be(_artistId);
+            var result = await _artistsController.GetById(_artistId);
         }
 
         private void Setup()
         {
-            _mockService = new Mock<IArtistService>();
-            _mockService.Setup(x => x.GetAll()).ReturnsAsync(new ArtistDo[0]);
-            _mockService.Setup(x => x.GetById(_artistId)).ReturnsAsync(new ArtistDo { Id = _artistId });
-            _artistsController = new ArtistsController(_mockService.Object);
+            _artistService = Substitute.For<IArtistService>();
+            _artistService.GetAll().Returns(new ArtistDo[0]);
+            _artistService.GetById(_artistId).Returns(new ArtistDo { ArtistId = _artistId });
+            _artistsController = new ArtistsController(_artistService);
         }
     }
 }

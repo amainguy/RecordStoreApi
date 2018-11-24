@@ -38,13 +38,13 @@ namespace RecordStore.Services.Tests
         {
             var result = await _subject.GetById(_recordId);
             result.Should().BeOfType<RecordDo>();
-            result.Id.Should().Be(_recordId);
+            result.RecordId.Should().Be(_recordId);
         }
 
         private void CreateSubject()
         {
             _unitOfWork.Records.Returns(Substitute.For<IRecordRepository>());
-            _unitOfWork.Records.Get(_recordId).Returns(new RecordDo {Id = _recordId});
+            _unitOfWork.Records.Get(_recordId).Returns(new RecordDo { RecordId = _recordId });
             _subject = new RecordService(_unitOfWork);
         }
     }

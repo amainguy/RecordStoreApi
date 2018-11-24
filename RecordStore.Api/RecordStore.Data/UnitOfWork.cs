@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using RecordStore.Data.Context;
 using RecordStore.Data.Repositories.Factories;
 using RecordStore.Data.Repositories.Interfaces;
@@ -21,6 +22,11 @@ namespace RecordStore.Data
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
