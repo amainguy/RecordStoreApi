@@ -11,7 +11,7 @@ using RecordStore.Api.Controllers;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
 
-namespace RecordStore.Api.Tests
+namespace RecordStore.Api.Tests.UnitTests
 {
     [TestClass]
     public class ArtistControllerTests
