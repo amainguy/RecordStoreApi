@@ -7,8 +7,9 @@ using RecordStore.Services.Interfaces;
 namespace RecordStore.Api.Controllers
 {
     [Route("api/artists")]
-    public class ArtistsController : Controller
+    public class ArtistsController : BaseController
     {
+        private const string ArtistShouldNotBeNull = "Artist should not be null";
         private readonly IArtistService _artistService;
 
         public ArtistsController(IArtistService artistService)
@@ -17,36 +18,48 @@ namespace RecordStore.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             var artists = await _artistService.GetAll();
             return Ok(artists);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetById")]
         public async Task<IActionResult> GetById(int id)
         {
             var artist = await _artistService.GetById(id);
-            if (artist == null)  return NotFound();
+            if (artist == null)
+                return NotFound();
             return Ok(artist);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ArtistDo artist)
         {
-            throw  new NotImplementedException();
+            if (artist == null)
+                return BadRequest(ArtistShouldNotBeNull);
+
+            return await TryExecutingServiceAsync(() => _artistService.Create(artist), CreatedAtRoute("GetById", new {id = artist.ArtistId, artist}) );
         }
 
         [HttpPut("{id}")]
-        public async Task Update(int id, [FromBody] ArtistDo artist)
+        public async Task<IActionResult> Update(int id, [FromBody] ArtistDo artist)
         {
-            throw new NotImplementedException();
+            if (artist == null)
+                return BadRequest(ArtistShouldNotBeNull);
+            if (id == 0)
+                return BadRequest("You must provide an id in order to retrieve the artist");
+
+            return await TryExecutingServiceAsync(() => _artistService.Update(id, artist), Ok());
         }
 
-        [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] ArtistDo artist)
         {
-            throw new NotImplementedException();
+            if (artist == null)
+                return BadRequest(ArtistShouldNotBeNull);
+
+            return await TryExecutingServiceAsync(() => _artistService.Delete(artist), Ok());
         }
     }
 }
