@@ -19,11 +19,6 @@ namespace RecordStore.Data
         public IRecordRepository Records => _repositoryFactory.GetRepository<IRecordRepository>();
         public IArtistRepository Artists => _repositoryFactory.GetRepository<IArtistRepository>();
 
-        public void SaveChanges()
-        {
-            _dbContext.SaveChanges();
-        }
-
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();

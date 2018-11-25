@@ -7,7 +7,6 @@ namespace RecordStore.Data
     {
         IRecordRepository Records { get; }
         IArtistRepository Artists { get; }
-        void SaveChanges();
         Task SaveChangesAsync();
     }
 }
