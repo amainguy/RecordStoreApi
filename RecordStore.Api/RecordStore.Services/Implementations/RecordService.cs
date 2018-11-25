@@ -19,5 +19,23 @@ namespace RecordStore.Services.Implementations
         {
             return await _unitOfWork.Records.Get(id);
         }
+
+        public async Task Create(RecordDo record)
+        {
+            _unitOfWork.Records.Create(record);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task Update(int id, RecordDo record)
+        {
+            await _unitOfWork.Records.Update(id, record);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task Delete(RecordDo record)
+        {
+            _unitOfWork.Records.Delete(record);
+            await _unitOfWork.SaveChangesAsync();
+        }
     }
 }

@@ -8,5 +8,8 @@ namespace RecordStore.Services.Interfaces
     {
         Task<IEnumerable<RecordDo>> GetAll();
         Task<RecordDo> GetById(int id);
+        Task Create(RecordDo record);
+        Task Update(int id, RecordDo record);
+        Task Delete(RecordDo record);
     }
 }

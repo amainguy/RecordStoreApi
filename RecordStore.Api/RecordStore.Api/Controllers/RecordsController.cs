@@ -7,8 +7,10 @@ using RecordStore.Services.Interfaces;
 namespace RecordStore.Api.Controllers
 {
     [Route("api/records")]
-    public class RecordsController : Controller
+    public class RecordsController : BaseController
     {
+        private const string RecordShouldNotBeNull = "RecordShouldNotBeNull";
+        private const string ValidRecordIdShouldBeProvided = "A valid record id should be provided";
         public IRecordService _recordService;
 
         public RecordsController(IRecordService recordService)
@@ -17,36 +19,49 @@ namespace RecordStore.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
-            var artists = await _recordService.GetAll();
-            return Ok(artists);
+            var records = await _recordService.GetAll();
+            return Ok(records);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetById")]
         public async Task<IActionResult> GetById(int id)
         {
             var record = await _recordService.GetById(id);
-            if (record == null) return NotFound();
+            if (record == null)
+                return NotFound();
+
             return Ok(record);
         }
 
         [HttpPost]
-        public async Task Create([FromBody] RecordDo record)
+        public async Task<IActionResult> Create([FromBody] RecordDo record)
         {
-            throw new NotImplementedException();
+            if (record == null)
+                return BadRequest(RecordShouldNotBeNull);
+
+            return await TryExecutingServiceAsync(() => _recordService.Create(record), CreatedAtRoute("GetById", new {id = record.RecordId}, record));
         }
 
         [HttpPut("{id}")]
-        public async Task Update(int id, [FromBody] RecordDo record)
+        public async Task<IActionResult> Update(int id, [FromBody] RecordDo record)
         {
-            throw new NotImplementedException();
+            if (record == null)
+                return BadRequest(RecordShouldNotBeNull);
+            if (id == 0)
+                return BadRequest(ValidRecordIdShouldBeProvided);
+
+            return await TryExecutingServiceAsync(() => _recordService.Update(id, record), Ok());
         }
 
-        [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] RecordDo record)
         {
-            throw new NotImplementedException();
+            if (record == null)
+                return BadRequest(RecordShouldNotBeNull);
+
+            return await TryExecutingServiceAsync(() => _recordService.Delete(record), Ok());
         }
     }
 }
