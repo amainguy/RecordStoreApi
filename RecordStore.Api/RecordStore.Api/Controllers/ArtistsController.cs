@@ -24,10 +24,19 @@ namespace RecordStore.Api.Controllers
             return Ok(artists);
         }
 
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetArtistById")]
         public async Task<IActionResult> GetById(int id)
         {
             var artist = await _artistService.GetById(id);
+            if (artist == null)
+                return NotFound();
+            return Ok(artist);
+        }
+
+        [HttpGet, Route("{id}/discography")]
+        public async Task<IActionResult> GetByIdWithDiscography(int id)
+        {
+            var artist = await _artistService.GetById(id, loadRecords: true);
             if (artist == null)
                 return NotFound();
             return Ok(artist);
@@ -39,7 +48,7 @@ namespace RecordStore.Api.Controllers
             if (artist == null)
                 return BadRequest(ArtistShouldNotBeNull);
 
-            return await TryExecutingServiceAsync(() => _artistService.Create(artist), CreatedAtRoute("GetById", new {id = artist.ArtistId, artist}) );
+            return await TryExecutingServiceAsync(() => _artistService.Create(artist), CreatedAtRoute("GetArtistById", new {id = artist.ArtistId, artist}) );
         }
 
         [HttpPut("{id}")]

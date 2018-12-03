@@ -8,6 +8,7 @@ using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
 using RecordStore.Api.Controllers;
+using RecordStore.Data;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
 
@@ -18,6 +19,7 @@ namespace RecordStore.Api.Tests.UnitTests
     {
         private IArtistService _artistService;
         private ArtistsController _artistsController;
+
         private int _artistId;
 
         [TestInitialize]
@@ -55,6 +57,26 @@ namespace RecordStore.Api.Tests.UnitTests
             var result = await _artistsController.GetById(_artistId);
 
             result.Should().BeOfType<NotFoundResult>(); 
+        }
+
+        [TestMethod]
+        public async Task GetById_WhenValidIdProvidedAndDiscographyShouldBeLoaded_ShouldReturnOkObjectResult()
+        {
+            _artistService.GetById(_artistId, true).Returns(new ArtistDo {ArtistId = _artistId});
+
+            var result = await _artistsController.GetByIdWithDiscography(_artistId);
+
+            result.Should().BeOfType<OkObjectResult>();
+        }
+
+        [TestMethod]
+        public async Task GetById_WhenInvalidIdProvidedAndDiscographyShouldBeLoaded_ShouldReturnNotFoundResult()
+        {
+            _artistService.GetById(_artistId, true).ReturnsNull();
+
+            var result = await _artistsController.GetByIdWithDiscography(_artistId);
+
+            result.Should().BeOfType<NotFoundResult>();
         }
 
         [TestMethod]

@@ -15,9 +15,11 @@ namespace RecordStore.Services.Implementations
             return await _unitOfWork.Records.GetAll();
         }
 
-        public async Task<RecordDo> GetById(int id)
+        public async Task<RecordDo> GetById(int id, bool loadArtist = false)
         {
-            return await _unitOfWork.Records.Get(id);
+            return (loadArtist)
+                ? await _unitOfWork.Records.GetWithArtist(id)
+                : await _unitOfWork.Records.Get(id);
         }
 
         public async Task Create(RecordDo record)

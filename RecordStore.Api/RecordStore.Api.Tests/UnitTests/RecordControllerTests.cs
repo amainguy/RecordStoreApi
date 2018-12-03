@@ -58,6 +58,26 @@ namespace RecordStore.Api.Tests.UnitTests
         }
 
         [TestMethod]
+        public async Task GetByIdWithArtist_WhenValidIdProvided_ShouldReturnOkObjectResult()
+        {
+            _recordService.GetById(_recordId, loadArtist: true).Returns(new RecordDo { RecordId = _recordId });
+
+            var result = await _recordsController.GetByIdWithArtist(_recordId);
+
+            result.Should().BeOfType<OkObjectResult>();
+        }
+
+        [TestMethod]
+        public async Task GetByIdWithArtist_WhenInvalidIdProvided_ShouldReturnNotFoundResult()
+        {
+            _recordService.GetById(_recordId, loadArtist: true).ReturnsNull();
+
+            var result = await _recordsController.GetByIdWithArtist(_recordId);
+
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [TestMethod]
         public async Task Create_WhenRecordIsNull_ShouldReturnBadRequestObjectResult()
         {
             var result = await _recordsController.Create(null);

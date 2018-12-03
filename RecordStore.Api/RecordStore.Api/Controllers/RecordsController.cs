@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.DomainObjects;
@@ -25,10 +24,20 @@ namespace RecordStore.Api.Controllers
             return Ok(records);
         }
 
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetRecordById")]
         public async Task<IActionResult> GetById(int id)
         {
             var record = await _recordService.GetById(id);
+            if (record == null)
+                return NotFound();
+
+            return Ok(record);
+        }
+
+        [HttpGet("{id}/artist")]
+        public async Task<IActionResult> GetByIdWithArtist(int id)
+        {
+            var record = await _recordService.GetById(id, loadArtist: true);
             if (record == null)
                 return NotFound();
 
@@ -41,7 +50,7 @@ namespace RecordStore.Api.Controllers
             if (record == null)
                 return BadRequest(RecordShouldNotBeNull);
 
-            return await TryExecutingServiceAsync(() => _recordService.Create(record), CreatedAtRoute("GetById", new {id = record.RecordId}, record));
+            return await TryExecutingServiceAsync(() => _recordService.Create(record), CreatedAtRoute("GetRecordById", new {id = record.RecordId}, record));
         }
 
         [HttpPut("{id}")]

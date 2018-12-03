@@ -8,7 +8,7 @@ namespace RecordStore.Data.Context
         public RecordStoreDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<RecordStoreDbContext>();
-            optionsBuilder.UseSqlite("Data Source=RecordStore.sqlite");
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\amain\\Projects\\RecordStore\\RecordStore.Api\\RecordStore.Data\\RecordStore.sqlite");
             return new RecordStoreDbContext(optionsBuilder.Options);
         }
     }
