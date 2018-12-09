@@ -15,16 +15,16 @@ namespace RecordStore.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<ArtistDo>> GetAll()
+        public Task<IEnumerable<ArtistDo>> GetAll()
         {
-            return await _unitOfWork.Artists.GetAll();
+            return _unitOfWork.Artists.GetAll();
         }
 
-        public async Task<ArtistDo> GetById(int id, bool loadRecords = false)
+        public Task<ArtistDo> GetById(int id, bool loadRecords = false)
         {
             return (loadRecords)
-                ? await _unitOfWork.Artists.GetWithRecords(id)
-                : await _unitOfWork.Artists.Get(id);
+                ? _unitOfWork.Artists.GetWithRecords(id)
+                : _unitOfWork.Artists.Get(id);
         }
 
         public async Task Create(ArtistDo artist)

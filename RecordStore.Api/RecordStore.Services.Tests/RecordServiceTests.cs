@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using RecordStore.Data;
@@ -23,22 +21,71 @@ namespace RecordStore.Services.Tests
         {
             _unitOfWork = Substitute.For<IUnitOfWork>();
             _recordId = 1;
+        }
+
+        [TestMethod]
+        public async Task GetAll_ShouldCallUnitOfWorkGetAll()
+        {
             CreateSubject();
+
+            await _subject.GetAll();
+
+            await _unitOfWork.Records.Received().GetAll();
         }
 
         [TestMethod]
-        public async Task GetAll_ShouldReturnIEnumerableOfRecords()
+        public async Task GetById_WhenLoadArtistIsFalse_ShouldCallGet()
         {
-            var result = await _subject.GetAll();
-            result.GetType().Should().BeAssignableTo<IEnumerable<RecordDo>>();
+            CreateSubject();
+
+            await _subject.GetById(_recordId, loadArtist: false);
+
+            await _unitOfWork.Records.Received().Get(_recordId);
         }
 
         [TestMethod]
-        public async Task GetById_ShouldReturnCorrespondingRecord()
+        public async Task GetById_WhenLoadArtistIsTrue_ShouldCallGetWithArtist()
         {
-            var result = await _subject.GetById(_recordId);
-            result.Should().BeOfType<RecordDo>();
-            result.RecordId.Should().Be(_recordId);
+            CreateSubject();
+
+            await _subject.GetById(_recordId, loadArtist: true);
+
+            await _unitOfWork.Records.Received().GetWithArtist(_recordId);
+        }
+
+        [TestMethod]
+        public async Task Create_ShouldCallUnitOfWorkCreateAndSaveChanges()
+        {
+            CreateSubject();
+            var record = new RecordDo();
+
+            await _subject.Create(record);
+
+            _unitOfWork.Records.Received().Create(record);
+            await _unitOfWork.Received().SaveChangesAsync();
+
+        }
+
+        [TestMethod]
+        public async Task Update_ShouldCallUnitOfWorkUpdateAndSaveChanges()
+        {
+            CreateSubject();
+            var record = new RecordDo();
+
+            await _subject.Update(_recordId, record);
+
+            await _unitOfWork.Records.Received().Update(_recordId, record);
+            await _unitOfWork.Received().SaveChangesAsync();
+        }
+
+        [TestMethod]
+        public async Task Delete_ShouldCallUnitOfWorkDeleteAndSaveChanges()
+        {
+            CreateSubject();
+            var record = new RecordDo();
+
+            await _subject.Delete(record);
+            await _unitOfWork.Received().SaveChangesAsync();
         }
 
         private void CreateSubject()
