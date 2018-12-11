@@ -63,7 +63,6 @@ namespace RecordStore.Services.Tests
 
             _unitOfWork.Records.Received().Create(record);
             await _unitOfWork.Received().SaveChangesAsync();
-
         }
 
         [TestMethod]

@@ -11,6 +11,7 @@ namespace RecordStore.Data.Context
         public DbSet<Record> Records { get; set; }
         public DbSet<Artist> Artists { get; set; }
 
+        public RecordStoreDbContext() { }
         public RecordStoreDbContext(DbContextOptions options) : base(options) { }
 
         public override int SaveChanges()
@@ -27,7 +28,8 @@ namespace RecordStore.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=C:\\Users\\amain\\Projects\\RecordStore\\RecordStore.Api\\RecordStore.Data\\RecordStore.sqlite");
+            if (optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlite("Data Source=C:\\Users\\amain\\Projects\\RecordStore\\RecordStore.Api\\RecordStore.Data\\RecordStore.sqlite");
         }
 
         private void AddAuditInfo()
