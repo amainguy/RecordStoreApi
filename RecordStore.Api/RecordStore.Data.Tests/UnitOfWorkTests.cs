@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using RecordStore.Data.Context;
+using RecordStore.Data.Models;
 using RecordStore.Data.Repositories.Factories;
 
 namespace RecordStore.Data.Tests
@@ -25,10 +27,11 @@ namespace RecordStore.Data.Tests
         public async Task SaveChangesAsync_ShouldCallDbContextSaveChangesAsync()
         {
             CreateSubject();
+            _dbContext.Artists.Add(new Artist());
 
             //await _subject.SaveChangesAsync();
 
-            //await _dbContext.Received().SaveChangesAsync();
+            //await _dbContext.ChangeTracker.HasChanges();
         }
 
         public void CreateSubject()

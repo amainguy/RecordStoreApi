@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RecordStore.Data.Models;
@@ -30,6 +32,8 @@ namespace RecordStore.Data.Context
         {
             if (optionsBuilder.IsConfigured)
                 optionsBuilder.UseSqlite("Data Source=C:\\Users\\amain\\Projects\\RecordStore\\RecordStore.Api\\RecordStore.Data\\RecordStore.sqlite");
+            else
+                optionsBuilder.UseInMemoryDatabase("TestsDB");
         }
 
         private void AddAuditInfo()
