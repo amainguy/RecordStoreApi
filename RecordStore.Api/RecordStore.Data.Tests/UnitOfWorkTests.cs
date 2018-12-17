@@ -31,7 +31,7 @@ namespace RecordStore.Data.Tests
 
             //await _subject.SaveChangesAsync();
 
-            //await _dbContext.ChangeTracker.HasChanges();
+            //_dbContext.ChangeTracker.HasChanges().Should();
         }
 
         public void CreateSubject()
