@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using RecordStore.Data.Context;
-using RecordStore.Data.Models;
 using RecordStore.Data.Repositories.Factories;
+using RecordStore.Data.Repositories.Interfaces;
 
 namespace RecordStore.Data.Tests
 {
@@ -13,31 +12,39 @@ namespace RecordStore.Data.Tests
     {
         private IUnitOfWork _subject;
         private IRepositoryFactory _repositoryFactory;
-        private RecordStoreDbContext _dbContext;
+        private IDbContext  _dbContext;
 
         [TestInitialize]
         public void Initialize()
         {
+            _dbContext = Substitute.For<IDbContext>();
             _repositoryFactory = Substitute.For<IRepositoryFactory>();
-            _dbContext = new RecordStoreDbContext();
+            _subject = new UnitOfWork(_repositoryFactory, _dbContext);
         }
 
 
         [TestMethod]
         public async Task SaveChangesAsync_ShouldCallDbContextSaveChangesAsync()
         {
-            CreateSubject();
-            _dbContext.Artists.Add(new Artist());
-
-            //await _subject.SaveChangesAsync();
-
-            //_dbContext.ChangeTracker.HasChanges().Should();
+            await _subject.SaveChangesAsync();
+   
+            await _dbContext.Received().SaveChangesAsync();
         }
 
-        public void CreateSubject()
+        [TestMethod]
+        public void Records_ShouldCallRecordRepository()
+        { 
+            var recordsRepository = _subject.Records;
+
+            _repositoryFactory.Received().GetRepository<IRecordRepository>();
+        }
+
+        [TestMethod]
+        public void Artists_ShouldCallArtistRepository()
         {
-            _subject = new UnitOfWork(_repositoryFactory, _dbContext);
-            
+            var artistsRepository = _subject.Artists;
+
+            _repositoryFactory.Received().GetRepository<IArtistRepository>();
         }
     }
 }
