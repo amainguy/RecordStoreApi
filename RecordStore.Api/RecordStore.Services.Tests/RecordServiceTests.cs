@@ -71,9 +71,9 @@ namespace RecordStore.Services.Tests
             CreateSubject();
             var record = new RecordDo();
 
-            await _subject.Update(_recordId, record);
+            await _subject.Update(record);
 
-            await _unitOfWork.Records.Received().Update(_recordId, record);
+            await _unitOfWork.Records.Received().Update(record);
             await _unitOfWork.Received().SaveChangesAsync();
         }
 

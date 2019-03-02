@@ -73,7 +73,7 @@ namespace RecordStore.Services.Tests
 
             await _subject.Update(_artistId, artist);
 
-            await _unitOfWork.Artists.Received().Update(_artistId, artist);
+            await _unitOfWork.Artists.Received().Update(artist);
             await _unitOfWork.Received().SaveChangesAsync();
         }
 

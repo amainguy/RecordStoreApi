@@ -12,7 +12,7 @@ namespace RecordStore.Data.Repositories.Interfaces
         Task<IEnumerable<DO>> GetAll();
         Task<DO> Get(int id);
         int Create(DO model);
-        Task Update(int id, DO model);
+        Task Update(DO model);
         Task<int> Count();
         void Delete(DO entity);
         IQueryable<DB> Where(Expression<Func<DB, bool>> predicate);

@@ -28,9 +28,9 @@ namespace RecordStore.Services.Implementations
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task Update(int id, RecordDo record)
+        public async Task Update(RecordDo record)
         {
-            await _unitOfWork.Records.Update(id, record);
+            await _unitOfWork.Records.Update(record);
             await _unitOfWork.SaveChangesAsync();
         }
 

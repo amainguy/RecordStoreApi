@@ -127,7 +127,7 @@ namespace RecordStore.Api.Tests.UnitTests
         {
             var record = Substitute.For<RecordDo>();
 
-            _recordService.Update(_recordId, record).Throws<Exception>();
+            _recordService.Update(record).Throws<Exception>();
 
             var result = await _recordsController.Update(_recordId, record);
 

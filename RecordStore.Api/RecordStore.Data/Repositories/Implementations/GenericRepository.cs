@@ -40,10 +40,10 @@ namespace RecordStore.Data.Repositories.Implementations
             return entity.GetId();
         }
 
-        public async Task Update(int id, TDomainObject model)
+        public async Task Update(TDomainObject model)
         {
             var mappedEntity = _mapper.Map<TDomainObject, TEntity>(model);
-            var foundEntity = await _dbContext.Set<TEntity>().FindAsync(id);
+            var foundEntity = await _dbContext.Set<TEntity>().FindAsync(mappedEntity.GetId());
             _dbContext.Entry(foundEntity).CurrentValues.SetValues(mappedEntity);
         }
 

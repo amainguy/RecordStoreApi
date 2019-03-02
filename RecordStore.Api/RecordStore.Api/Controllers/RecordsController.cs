@@ -61,7 +61,7 @@ namespace RecordStore.Api.Controllers
             if (id == 0)
                 return BadRequest(ValidRecordIdShouldBeProvided);
 
-            return await TryExecutingServiceAsync(() => _recordService.Update(id, record), Ok());
+            return await TryExecutingServiceAsync(() => _recordService.Update(record), Ok());
         }
 
         [HttpDelete]

@@ -35,7 +35,7 @@ namespace RecordStore.Services.Implementations
 
         public async Task Update(int id, ArtistDo artist)
         {
-            await _unitOfWork.Artists.Update(id, artist);
+            await _unitOfWork.Artists.Update(artist);
             await _unitOfWork.SaveChangesAsync();
         }
 

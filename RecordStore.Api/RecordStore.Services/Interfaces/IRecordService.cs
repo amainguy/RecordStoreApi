@@ -9,7 +9,7 @@ namespace RecordStore.Services.Interfaces
         Task<IEnumerable<RecordDo>> GetAll();
         Task<RecordDo> GetById(int id, bool loadArtist = false);
         Task Create(RecordDo record);
-        Task Update(int id, RecordDo record);
+        Task Update(RecordDo record);
         Task Delete(RecordDo record);
     }
 }
