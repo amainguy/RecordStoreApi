@@ -8,9 +8,9 @@ namespace RecordStore.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IRepositoryFactory _repositoryFactory;
-        private readonly IDbContext _dbContext;  
+        private readonly RecordStoreDbContext _dbContext;  
 
-        public UnitOfWork(IRepositoryFactory repositoryFactory, IDbContext dbContext)
+        public UnitOfWork(IRepositoryFactory repositoryFactory, RecordStoreDbContext dbContext)
         {
             _repositoryFactory = repositoryFactory;
             _dbContext = dbContext;

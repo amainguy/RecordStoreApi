@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
@@ -6,6 +8,7 @@ using RecordStore.Services.Interfaces;
 namespace RecordStore.Api.Controllers
 {
     [Route("api/records")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class RecordsController : BaseController
     {
         private const string RecordShouldNotBeNull = "RecordShouldNotBeNull";

@@ -1,12 +1,16 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.DomainObjects;
 using RecordStore.Services.Interfaces;
 
 namespace RecordStore.Api.Controllers
 {
+    
     [Route("api/artists")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ArtistsController : BaseController
     {
         private const string ArtistShouldNotBeNull = "Artist should not be null";

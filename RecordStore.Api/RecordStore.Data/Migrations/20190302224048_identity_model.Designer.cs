@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecordStore.Data.Context;
 
 namespace RecordStore.Data.Migrations
 {
     [DbContext(typeof(RecordStoreDbContext))]
-    partial class RecordStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190302224048_identity_model")]
+    partial class identity_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

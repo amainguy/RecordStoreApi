@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RecordStore.Data.Models;
 
 namespace RecordStore.Data.Context
 {
-    public class RecordStoreDbContext : DbContext, IDbContext
+    public class RecordStoreDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public DbSet<Record> Records { get; set; }
         public DbSet<Artist> Artists { get; set; }
@@ -47,6 +49,7 @@ namespace RecordStore.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Record>().HasOne(r => r.Artist).WithMany(a => a.Records);
             DataSeeder.SeedData(modelBuilder);
         }
