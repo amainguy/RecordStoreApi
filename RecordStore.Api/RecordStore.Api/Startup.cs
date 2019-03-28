@@ -14,6 +14,8 @@ namespace RecordStore.Api
 {
     public class Startup
     {
+        private const string CorsPolicy = "AllowAll";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,8 +38,7 @@ namespace RecordStore.Api
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(cfg =>
+            }).AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;
@@ -59,6 +60,13 @@ namespace RecordStore.Api
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 0;
             });
+
+            services.AddCors(o => o.AddPolicy(CorsPolicy, builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -68,6 +76,7 @@ namespace RecordStore.Api
 
             app.UseAuthentication();
             app.UseMvc();
+            app.UseCors(CorsPolicy);
         }
     }
 }
