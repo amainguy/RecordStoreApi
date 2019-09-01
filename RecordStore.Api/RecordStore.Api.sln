@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStore.Api", "RecordStore.Api\RecordStore.Api.csproj", "{5957F808-0C6E-4D43-BF4B-D26B13314A59}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStore.Data", "RecordS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStore.Data.Tests", "RecordStore.Data.Tests\RecordStore.Data.Tests.csproj", "{081D8ACB-08D4-48E3-A720-7B31DD265F55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStore.DI", "RecordStore.DI\RecordStore.DI.csproj", "{7A6DCFF5-8B54-4A44-B723-085125D1BCBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStore.DI", "RecordStore.DI\RecordStore.DI.csproj", "{7A6DCFF5-8B54-4A44-B723-085125D1BCBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStore.FilesStorage", "RecordStore.FilesStorage\RecordStore.FilesStorage.csproj", "{5B434A1F-4020-4D1C-B1AB-BF7DD6BB753B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{7A6DCFF5-8B54-4A44-B723-085125D1BCBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A6DCFF5-8B54-4A44-B723-085125D1BCBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A6DCFF5-8B54-4A44-B723-085125D1BCBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B434A1F-4020-4D1C-B1AB-BF7DD6BB753B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B434A1F-4020-4D1C-B1AB-BF7DD6BB753B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B434A1F-4020-4D1C-B1AB-BF7DD6BB753B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B434A1F-4020-4D1C-B1AB-BF7DD6BB753B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

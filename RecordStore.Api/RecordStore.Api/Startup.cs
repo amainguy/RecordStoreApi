@@ -25,6 +25,13 @@ namespace RecordStore.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy(CorsPolicy, builder =>
+            {
+                builder.AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowAnyOrigin();
+            }));
+
             services.AddMvc().AddJsonOptions(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -60,13 +67,6 @@ namespace RecordStore.Api
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 0;
             });
-
-            services.AddCors(o => o.AddPolicy(CorsPolicy, builder =>
-            {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -74,9 +74,9 @@ namespace RecordStore.Api
             if (env.IsDevelopment()) 
                 app.UseDeveloperExceptionPage();
 
+            app.UseCors(CorsPolicy);
             app.UseAuthentication();
             app.UseMvc();
-            app.UseCors(CorsPolicy);
         }
     }
 }

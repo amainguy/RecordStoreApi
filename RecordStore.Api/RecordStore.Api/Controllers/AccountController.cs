@@ -14,13 +14,13 @@ using RecordStore.DomainObjects;
 namespace RecordStore.Api.Controllers
 {
     [Route("api/account")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration) 
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -29,14 +29,19 @@ namespace RecordStore.Api.Controllers
 
 
         [HttpPost, Route("login")]
-        public async Task<object> Login([FromBody] LoginDo model)
+        public async Task<UserDo> Login([FromBody] LoginDo model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return GenerateJwtToken(model.Email, appUser);
+                return new UserDo
+                {
+                    Id = appUser.Id,
+                    Email = model.Email,
+                    Token = GenerateJwtToken(model.Email, appUser).ToString()
+                };
             }
 
             throw new ApplicationException("Invalid login attempt");

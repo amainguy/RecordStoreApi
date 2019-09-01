@@ -1,10 +1,5 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using RecordStore.Data;
 using RecordStore.Data.Context;
 using RecordStore.Data.Repositories.Factories;
@@ -21,9 +16,7 @@ namespace RecordStore.DI
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<RecordStoreDbContext>()
-                .AddDefaultTokenProviders();
-
-            
+                .AddDefaultTokenProviders(); 
         }
     }
 }
